@@ -1,1 +1,42 @@
-file has been changed
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>phone gap application</title>
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script type="text/javascript">
+            var watchid=null;
+            document.addEventListener("device ready",onDeviceReady,false);
+            function onDeviceReady(){
+                startwatch();
+            }
+            function startwatch(){
+                var options={frequency:3000};
+                watchid=navigator.accelerometer.watchAcceleration(onSuccess,onError,options);
+            }
+            function stopwatch(){
+                if(watchid)
+                {
+                    navigator.accelerometer.clearwatch(watchid);
+                    watchid=null;
+                }
+            }
+            function onSuccess(acceleration)
+            {
+                var element=document.getElementbyId("accelerometer");
+                element.innerHtml='Accelerometer x:'+acceleration.x +'<br/>' +
+                                  'Accelerometer y:'+ acceleration.y +'<br/>' +
+                                  'Accelerometer z:'+ acceleration.z +'<br/>' +
+                                  'timestamp'+acceleration.timestamp +'<br/>';
+                          
+            }
+            function onError(){
+                alert('There is a problem');
+            }
+          </script>
+            
+    </head>
+    <body>
+    <div id="accelerometer">Waiting for accelerometer</div>
+    </body>
+</html>
